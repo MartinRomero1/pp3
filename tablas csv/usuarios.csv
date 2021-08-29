@@ -1,0 +1,6 @@
+"ID_USUARIO","USUARIO","CONTRASENA","ACTIVO","Permisos"
+1,"Admin",1111,1,1
+2,"Usuario 2 ",2222,1,0
+3,"Usuario 3",3333,1,0
+4,"Usuario 2 ",4444,1,0
+5,"Usuario 4",5555,1,0

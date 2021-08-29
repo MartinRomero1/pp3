@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>widget</class>
+ <widget class="QWidget" name="widget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>801</width>
+    <height>357</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Listado de ventas</string>
+  </property>
+  <widget class="QPushButton" name="btnalta">
+   <property name="geometry">
+    <rect>
+     <x>650</x>
+     <y>40</y>
+     <width>131</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Agregar Registro</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_2">
+   <property name="geometry">
+    <rect>
+     <x>650</x>
+     <y>70</y>
+     <width>131</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Eliminar Registro</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_3">
+   <property name="geometry">
+    <rect>
+     <x>650</x>
+     <y>100</y>
+     <width>131</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Modificar Registro</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboBox">
+   <property name="geometry">
+    <rect>
+     <x>650</x>
+     <y>290</y>
+     <width>131</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>Vendedor</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Producto</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Precio</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Fecha</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QPushButton" name="pushButton_4">
+   <property name="geometry">
+    <rect>
+     <x>650</x>
+     <y>320</y>
+     <width>131</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Ordenar Registros</string>
+   </property>
+  </widget>
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>650</x>
+     <y>260</y>
+     <width>151</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Ordenar registros</string>
+   </property>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_2">
+   <property name="geometry">
+    <rect>
+     <x>640</x>
+     <y>10</y>
+     <width>151</width>
+     <height>121</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Acciones</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>20</y>
+     <width>71</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Bienvenido</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbluser">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>20</y>
+     <width>521</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>piuuuuummm</string>
+   </property>
+  </widget>
+  <widget class="QTableWidget" name="tbventas">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>50</y>
+     <width>621</width>
+     <height>291</height>
+    </rect>
+   </property>
+   <column>
+    <property name="text">
+     <string>Vendedor</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Rroducto</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Precio</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Fecha</string>
+    </property>
+   </column>
+  </widget>
+  <zorder>groupBox_2</zorder>
+  <zorder>groupBox</zorder>
+  <zorder>btnalta</zorder>
+  <zorder>pushButton_2</zorder>
+  <zorder>pushButton_3</zorder>
+  <zorder>comboBox</zorder>
+  <zorder>pushButton_4</zorder>
+  <zorder>label</zorder>
+  <zorder>lbluser</zorder>
+  <zorder>tbventas</zorder>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
