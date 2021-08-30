@@ -1,10 +1,13 @@
 import mysql.connector
 from datetime import date
 
+# 'Mavericks123!' desktop
+# '' netbook
+
 dbconn= {
    'host' : 'localhost',
    'user' : 'root',
-   'password' : '',
+   'password' : 'Mavericks123!',
    'database' : 'practicaDB'
 }
 
