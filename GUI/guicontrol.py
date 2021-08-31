@@ -62,11 +62,9 @@ class ListadoVentas (QDialog):
         #self.lbluser.setText(V_Login.)
 
         ventas = fdb.consultagral("SELECT USUARIO, DESCRIPCION, PRECIO, FECHA FROM practicaDB.usuarios inner join practicaDB.ventas on practicaDB.usuarios.ID_USUARIO = practicaDB.ventas.ID_USUARIO inner join practicaDB.productos on practicaDB.productos.ID_PRODUCTO = practicaDB.ventas.ID_VENTA")
-
-        # for venta in ventas:
-        #     for item in venta:
-        #         QtWidgets.QTableWidget.setCurrentCell(self, venta, item)
-
+        for venta in ventas:
+            for dato in venta:
+                print(dato)
 
 #Alta de Ventas
 class VentanaAlta (QDialog):

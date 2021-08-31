@@ -27,6 +27,9 @@
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_2">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>650</x>
@@ -35,11 +38,23 @@
      <height>28</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
    <property name="text">
     <string>Eliminar Registro</string>
    </property>
+   <property name="default">
+    <bool>false</bool>
+   </property>
+   <property name="flat">
+    <bool>false</bool>
+   </property>
   </widget>
   <widget class="QPushButton" name="pushButton_3">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>650</x>
@@ -50,62 +65,6 @@
    </property>
    <property name="text">
     <string>Modificar Registro</string>
-   </property>
-  </widget>
-  <widget class="QComboBox" name="comboBox">
-   <property name="geometry">
-    <rect>
-     <x>650</x>
-     <y>290</y>
-     <width>131</width>
-     <height>24</height>
-    </rect>
-   </property>
-   <item>
-    <property name="text">
-     <string>Vendedor</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>Producto</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>Precio</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>Fecha</string>
-    </property>
-   </item>
-  </widget>
-  <widget class="QPushButton" name="pushButton_4">
-   <property name="geometry">
-    <rect>
-     <x>650</x>
-     <y>320</y>
-     <width>131</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Ordenar Registros</string>
-   </property>
-  </widget>
-  <widget class="QGroupBox" name="groupBox">
-   <property name="geometry">
-    <rect>
-     <x>650</x>
-     <y>260</y>
-     <width>151</width>
-     <height>91</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string>Ordenar registros</string>
    </property>
   </widget>
   <widget class="QGroupBox" name="groupBox_2">
@@ -178,12 +137,9 @@
    </column>
   </widget>
   <zorder>groupBox_2</zorder>
-  <zorder>groupBox</zorder>
   <zorder>btnalta</zorder>
   <zorder>pushButton_2</zorder>
   <zorder>pushButton_3</zorder>
-  <zorder>comboBox</zorder>
-  <zorder>pushButton_4</zorder>
   <zorder>label</zorder>
   <zorder>lbluser</zorder>
   <zorder>tbventas</zorder>
