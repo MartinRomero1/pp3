@@ -61,14 +61,15 @@ class ListadoVentas (QDialog):
         # TRAER DATOS DE USUARIO LOGUEADO
         #self.lbluser.setText(V_Login.)
 
-        self.tableWidget = QtWidgets.QTableWidget()
 
         ventas = fdb.consultagral("SELECT USUARIO, DESCRIPCION, PRECIO, FECHA FROM practicaDB.usuarios inner join practicaDB.ventas on practicaDB.usuarios.ID_USUARIO = practicaDB.ventas.ID_USUARIO inner join practicaDB.productos on practicaDB.productos.ID_PRODUCTO = practicaDB.ventas.ID_VENTA")
-        for venta in ventas:
-            self.tbventas.setColumnCount( 4 ) # columnas tabla
-            for dato in venta:
-                self.tbventas.setRowCount( len ( venta ) )
-                print(type(dato))
+
+        #Generar y poblar tabla
+        for columna in range (4):
+            for fila in range (2):
+                self.tbventas.setRowCount(10)
+                self.tbventas.setItem ( fila, columna, QtWidgets.QTableWidgetItem ( str(ventas[fila][columna] )) )
+
 
 #Alta de Ventas
 class VentanaAlta (QDialog):
