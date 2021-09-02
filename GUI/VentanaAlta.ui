@@ -52,7 +52,7 @@
     <string>Registrar venta</string>
    </property>
   </widget>
-  <widget class="QComboBox" name="comboBox_2">
+  <widget class="QComboBox" name="listavendedor">
    <property name="enabled">
     <bool>false</bool>
    </property>

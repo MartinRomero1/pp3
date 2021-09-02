@@ -12,8 +12,6 @@ class Login (QDialog):
         super(Login,self).__init__()
         uic.loadUi('Login.ui',self)
 
-        #muestra usuarios
-
         usuarios = fdb.consultagral('Select * from usuarios')
         cantusuarios = len(usuarios)
         for usuario in range(cantusuarios):
@@ -70,8 +68,12 @@ class ListadoVentas (QDialog):
                 self.tbventas.setRowCount(10)
                 self.tbventas.setItem ( fila, columna, QtWidgets.QTableWidgetItem ( str(ventas[fila][columna] )) )
 
+        def mostrarVentanaAlta():
+            return V_VentanaAlta.show ()
 
-        self.btnalta.clicked.connect(mostrarVentanaAlta)
+        self.btnalta.clicked.connect (mostrarVentanaAlta)
+
+
 
 #Alta de Ventas
 class VentanaAlta (QDialog):
@@ -79,8 +81,20 @@ class VentanaAlta (QDialog):
         super(VentanaAlta, self).__init__()
         uic.loadUi('VentanaAlta.ui',self)
 
+        #muestra usuarios para alta
+        usuarios = fdb.consultagral ( 'Select * from usuarios' )
+        cantusuarios = len ( usuarios )
+        for usuario in range ( cantusuarios ):
+            item = usuarios[usuario][1]
+            self.listavendedor.addItem ( str ( item ) )
 
+            producto = fdb.consultagral ("SELECT DESCRIPCION, PRECIO FROM practicaDB.productos")
 
+            # Generar y poblar tabla
+            for columna in range ( 2 ):
+                for fila in range ( 8 ):
+                    self.tbproductos.setRowCount ( 11 )
+                    self.tbproductos.setItem ( fila, columna,QtWidgets.QTableWidgetItem ( str ( producto[fila][columna] ) ) )
 
 
 #Llamada a ventanas
@@ -90,8 +104,7 @@ V_VentanaAlta = VentanaAlta()
 V_ListadoVentas = ListadoVentas()
 
 
-def mostrarVentanaAlta():
-    return V_VentanaAlta.show()
+
 #muestra ventanas
 V_Login.show()
 #V_ListadoVentas.show()
