@@ -71,11 +71,16 @@ class ListadoVentas (QDialog):
                 self.tbventas.setItem ( fila, columna, QtWidgets.QTableWidgetItem ( str(ventas[fila][columna] )) )
 
 
+        self.btnalta.clicked.connect(mostrarVentanaAlta)
+
 #Alta de Ventas
 class VentanaAlta (QDialog):
     def __init__(self):
         super(VentanaAlta, self).__init__()
         uic.loadUi('VentanaAlta.ui',self)
+
+
+
 
 
 #Llamada a ventanas
@@ -84,6 +89,9 @@ V_Login = Login()
 V_VentanaAlta = VentanaAlta()
 V_ListadoVentas = ListadoVentas()
 
+
+def mostrarVentanaAlta():
+    return V_VentanaAlta.show()
 #muestra ventanas
 V_Login.show()
 #V_ListadoVentas.show()
