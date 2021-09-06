@@ -71,6 +71,10 @@ class ListadoVentas (QDialog):
         def mostrarVentanaAlta():
             return V_VentanaAlta.show ()
 
+
+        if V_VentanaAlta.isActiveWindow():
+            print(self.tbventas.currentColumn())
+
         self.btnalta.clicked.connect (mostrarVentanaAlta)
 
 
@@ -96,10 +100,8 @@ class VentanaAlta (QDialog):
                     self.tbproductos.setRowCount ( 11 )
                     self.tbproductos.setItem ( fila, columna,QtWidgets.QTableWidgetItem ( str ( producto[fila][columna] ) ) )
 
-            def Clicked():
-                pass
-            if self.tbproductos.itemActivated.connect(Clicked):
-                print('llega')
+        #seleccion de fila
+
 
 
 
@@ -115,7 +117,6 @@ V_ListadoVentas = ListadoVentas()
 V_Login.show()
 #V_ListadoVentas.show()
 #V_VentanaAlta.show()
-
 
 
 app.exec()
