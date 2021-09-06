@@ -96,6 +96,12 @@ class VentanaAlta (QDialog):
                     self.tbproductos.setRowCount ( 11 )
                     self.tbproductos.setItem ( fila, columna,QtWidgets.QTableWidgetItem ( str ( producto[fila][columna] ) ) )
 
+            def Clicked():
+                pass
+            if self.tbproductos.itemActivated.connect(Clicked):
+                print('llega')
+
+
 
 #Llamada a ventanas
 app = QApplication(sys.argv)

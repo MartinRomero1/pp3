@@ -26,7 +26,7 @@
     <string>Agregar Registro</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="btnEliminarReg">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -51,7 +51,7 @@
     <bool>false</bool>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_3">
+  <widget class="QPushButton" name="btnModificarReg">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -144,8 +144,8 @@
   </widget>
   <zorder>groupBox_2</zorder>
   <zorder>btnalta</zorder>
-  <zorder>pushButton_2</zorder>
-  <zorder>pushButton_3</zorder>
+  <zorder>btnEliminarReg</zorder>
+  <zorder>btnModificarReg</zorder>
   <zorder>label</zorder>
   <zorder>lbluser</zorder>
   <zorder>tbventas</zorder>
