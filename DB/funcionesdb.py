@@ -18,6 +18,7 @@ def consultagral(sql):
    resultado = cursor.fetchall()
    return resultado
 
+
 #consulta listaventas
 
 # SELECT USUARIO, DESCRIPCION, PRECIO, FECHA FROM practicaDB.usuarios

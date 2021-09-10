@@ -3,6 +3,8 @@ from PyQt5 import uic, QtWidgets
 from PyQt5.QtWidgets import QDialog, QApplication
 from DB import funcionesdb as fdb
 
+def userSelected():
+    return (V_Login.cbusuario.currentText ())
 
 #ventanas
 
@@ -20,14 +22,14 @@ class Login (QDialog):
 
         #verificar usuario
 
-        def userSelected():
-            return V_Login.cbusuario.currentText()
+
 
         def btnlogingetdata():
 
             #DATOS INGRESADOS
             inputPass = V_Login.inputpassword.text()
             print(userSelected())
+            #print ( type(userSelected ()) )
             print(inputPass)
 
             #TRAE DATOS DE USUARIO DE BD
@@ -47,6 +49,7 @@ class Login (QDialog):
             else :
                 V_Login.lblerror.setText('Usuario o contraseña incorrecta')
 
+                usuarioActivo = userSelected()
         self.btnLogin.clicked.connect(btnlogingetdata)
 
 
@@ -57,7 +60,7 @@ class ListadoVentas (QDialog):
         uic.loadUi('ListadoVentas.ui',self)
 
         # TRAER DATOS DE USUARIO LOGUEADO
-        #self.lbluser.setText(V_Login.)
+
 
 
         ventas = fdb.consultagral("SELECT USUARIO, DESCRIPCION, PRECIO, FECHA FROM practicaDB.usuarios inner join practicaDB.ventas on practicaDB.usuarios.ID_USUARIO = practicaDB.ventas.ID_USUARIO inner join practicaDB.productos on practicaDB.productos.ID_PRODUCTO = practicaDB.ventas.ID_VENTA")
@@ -71,6 +74,7 @@ class ListadoVentas (QDialog):
         def mostrarVentanaAlta():
             return V_VentanaAlta.show ()
 
+        self.lbluser.setText ( userSelected() )
         self.btnalta.clicked.connect (mostrarVentanaAlta)
 
 
@@ -96,10 +100,8 @@ class VentanaAlta (QDialog):
                     self.tbproductos.setRowCount ( 11 )
                     self.tbproductos.setItem ( fila, columna,QtWidgets.QTableWidgetItem ( str ( producto[fila][columna] ) ) )
 
-            def Clicked():
-                pass
-            if self.tbproductos.itemActivated.connect(Clicked):
-                print('llega')
+
+
 
 
 
@@ -111,7 +113,13 @@ V_ListadoVentas = ListadoVentas()
 
 
 
-#muestra ventanas
+
+
+
+
+
+
+# muestra ventanas
 V_Login.show()
 #V_ListadoVentas.show()
 #V_VentanaAlta.show()
