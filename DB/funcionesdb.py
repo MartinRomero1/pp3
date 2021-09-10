@@ -7,7 +7,7 @@ from datetime import date
 dbconn= {
    'host' : 'localhost',
    'user' : 'root',
-   'password' : 'Mavericks123!',
+   'password' : '',
    'database' : 'practicaDB'
 }
 

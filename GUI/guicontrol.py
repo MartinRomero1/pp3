@@ -29,9 +29,9 @@ class Login (QDialog):
             #DATOS INGRESADOS
             inputPass = V_Login.inputpassword.text()
             print(userSelected())
-            #print ( type(userSelected ()) )
             print(inputPass)
-
+            userAct = userSelected()
+            V_ListadoVentas.lbluser.setText(userAct)
             #TRAE DATOS DE USUARIO DE BD
             try:
                 passDB = str(fdb.consultagral('Select CONTRASENA from usuarios where USUARIO = ' + '"' + userSelected() + '"')[0][0])
@@ -74,7 +74,6 @@ class ListadoVentas (QDialog):
         def mostrarVentanaAlta():
             return V_VentanaAlta.show ()
 
-        self.lbluser.setText ( userSelected() )
         self.btnalta.clicked.connect (mostrarVentanaAlta)
 
 
