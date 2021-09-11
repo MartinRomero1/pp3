@@ -49,7 +49,6 @@ class Login (QDialog):
             else :
                 V_Login.lblerror.setText('Usuario o contraseña incorrecta')
 
-                usuarioActivo = userSelected()
         self.btnLogin.clicked.connect(btnlogingetdata)
 
 
