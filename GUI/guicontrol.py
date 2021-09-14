@@ -30,8 +30,13 @@ class Login (QDialog):
             inputPass = V_Login.inputpassword.text()
             print(userSelected())
             print(inputPass)
+
+            #pasaje de usuario a ventana ventas
+
             userAct = userSelected()
             V_ListadoVentas.lbluser.setText(userAct)
+            userAlta = fdb.consultagral('Select ID_USUARIO from usuarios where USUARIO = ' + '"' + userAct + '"')[0][0]
+            V_VentanaAlta.listavendedor.itemText(userAlta+1)
             #TRAE DATOS DE USUARIO DE BD
             try:
                 passDB = str(fdb.consultagral('Select CONTRASENA from usuarios where USUARIO = ' + '"' + userSelected() + '"')[0][0])
@@ -97,8 +102,6 @@ class VentanaAlta (QDialog):
                 for fila in range ( 8 ):
                     self.tbproductos.setRowCount ( 11 )
                     self.tbproductos.setItem ( fila, columna,QtWidgets.QTableWidgetItem ( str ( producto[fila][columna] ) ) )
-
-
 
 
 
