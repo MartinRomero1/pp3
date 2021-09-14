@@ -54,7 +54,7 @@
   </widget>
   <widget class="QComboBox" name="listavendedor">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -64,7 +64,10 @@
      <height>24</height>
     </rect>
    </property>
-   <property name="editable">
+   <property name="currentIndex">
+    <number>-1</number>
+   </property>
+   <property name="frame">
     <bool>true</bool>
    </property>
   </widget>
