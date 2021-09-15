@@ -36,7 +36,7 @@ class Login (QDialog):
             userAct = userSelected()
             V_ListadoVentas.lbluser.setText(userAct)
             userAlta = fdb.consultagral('Select ID_USUARIO from usuarios where USUARIO = ' + '"' + userAct + '"')[0][0]
-            V_VentanaAlta.listavendedor.itemText(userAlta+1)
+            #V_VentanaAlta.listavendedor.itemText(userAlta+1)
             #TRAE DATOS DE USUARIO DE BD
             try:
                 passDB = str(fdb.consultagral('Select CONTRASENA from usuarios where USUARIO = ' + '"' + userSelected() + '"')[0][0])
@@ -67,7 +67,7 @@ class ListadoVentas (QDialog):
 
 
 
-        ventas = fdb.consultagral("SELECT USUARIO, DESCRIPCION, PRECIO, FECHA FROM practicaDB.usuarios inner join practicaDB.ventas on practicaDB.usuarios.ID_USUARIO = practicaDB.ventas.ID_USUARIO inner join practicaDB.productos on practicaDB.productos.ID_PRODUCTO = practicaDB.ventas.ID_VENTA")
+        ventas = fdb.consultagral("SELECT USUARIO, DESCRIPCION, PRECIO, FECHA, ventas.ID_VENTA FROM practicaDB.usuarios inner join practicaDB.ventas on practicaDB.usuarios.ID_USUARIO = practicaDB.ventas.ID_USUARIO inner join practicaDB.productos on practicaDB.productos.ID_PRODUCTO = practicaDB.ventas.ID_VENTA")
 
         #Generar y poblar tabla
         for columna in range (4):
@@ -78,8 +78,17 @@ class ListadoVentas (QDialog):
         def mostrarVentanaAlta():
             return V_VentanaAlta.show ()
 
-        self.btnalta.clicked.connect (mostrarVentanaAlta)
+        #Seleccion fila
 
+
+
+
+
+        self.btnalta.clicked.connect (mostrarVentanaAlta)
+        if V_VentanaAlta.isActiveWindow():
+
+            row = self.tbventas.currentRow()
+            print(row)
 
 
 #Alta de Ventas
