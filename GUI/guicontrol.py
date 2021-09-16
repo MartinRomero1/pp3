@@ -36,7 +36,7 @@ class Login (QDialog):
             userAct = userSelected()
             V_ListadoVentas.lbluser.setText(userAct)
             userAlta = fdb.consultagral('Select ID_USUARIO from usuarios where USUARIO = ' + '"' + userAct + '"')[0][0]
-            #V_VentanaAlta.listavendedor.itemText(userAlta+1)
+            V_VentanaAlta.listavendedor.itemText(userAlta)
             #TRAE DATOS DE USUARIO DE BD
             try:
                 passDB = str(fdb.consultagral('Select CONTRASENA from usuarios where USUARIO = ' + '"' + userSelected() + '"')[0][0])
@@ -77,6 +77,8 @@ class ListadoVentas (QDialog):
 
         def mostrarVentanaAlta():
             return V_VentanaAlta.show ()
+
+
 
         #Seleccion fila
 
