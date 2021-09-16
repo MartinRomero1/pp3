@@ -85,10 +85,7 @@ class ListadoVentas (QDialog):
 
 
         self.btnalta.clicked.connect (mostrarVentanaAlta)
-        if V_VentanaAlta.isActiveWindow():
 
-            row = self.tbventas.currentRow()
-            print(row)
 
 
 #Alta de Ventas
