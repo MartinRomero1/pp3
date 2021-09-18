@@ -54,11 +54,11 @@
   </widget>
   <widget class="QComboBox" name="listavendedor">
    <property name="enabled">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="geometry">
     <rect>
-     <x>70</x>
+     <x>90</x>
      <y>60</y>
      <width>251</width>
      <height>24</height>
@@ -74,8 +74,8 @@
   <widget class="QLabel" name="label_5">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>60</y>
+     <x>20</x>
+     <y>62</y>
      <width>58</width>
      <height>16</height>
     </rect>
