@@ -118,14 +118,29 @@
      <height>291</height>
     </rect>
    </property>
+   <property name="editTriggers">
+    <set>QAbstractItemView::NoEditTriggers</set>
+   </property>
+   <property name="tabKeyNavigation">
+    <bool>true</bool>
+   </property>
+   <property name="dragDropOverwriteMode">
+    <bool>false</bool>
+   </property>
+   <property name="defaultDropAction">
+    <enum>Qt::IgnoreAction</enum>
+   </property>
    <property name="alternatingRowColors">
     <bool>true</bool>
    </property>
    <property name="selectionMode">
-    <enum>QAbstractItemView::ExtendedSelection</enum>
+    <enum>QAbstractItemView::SingleSelection</enum>
    </property>
    <property name="selectionBehavior">
     <enum>QAbstractItemView::SelectRows</enum>
+   </property>
+   <property name="sortingEnabled">
+    <bool>true</bool>
    </property>
    <column>
     <property name="text">
@@ -134,7 +149,7 @@
    </column>
    <column>
     <property name="text">
-     <string>Rroducto</string>
+     <string>Producto</string>
     </property>
    </column>
    <column>
@@ -145,6 +160,11 @@
    <column>
     <property name="text">
      <string>Fecha</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>ID Venta</string>
     </property>
    </column>
   </widget>

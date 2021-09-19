@@ -2,29 +2,30 @@ import sys
 from PyQt5 import uic, QtWidgets
 from PyQt5.QtWidgets import QDialog, QApplication
 from DB import funcionesdb as fdb
+import datetime
 
 def userSelected():
     return (V_Login.cbusuario.currentText ())
 
-#ventanas
+def selectedRow():
+    if V_ListadoVentas.tbventas.selectedItems() and V_ListadoVentas.isActiveWindow():
+        V_ListadoVentas.btnEliminarReg.setEnabled(True)
+        V_ListadoVentas.btnModificarReg.setEnabled ( True )
+        print('fila venta seleccionada')
+        for items in V_ListadoVentas.tbventas.selectedItems():
+            print(items.text())
 
-#Login
-class Login (QDialog):
-    def __init__(self):
-        super(Login,self).__init__()
-        uic.loadUi('Login.ui',self)
+    if V_VentanaAlta.tbproductos.selectedItems() and V_VentanaAlta.isActiveWindow():
+        V_VentanaAlta.btnAlta.setEnabled(True)
+        print ( 'fila alta seleccionada' )
+        for items in V_VentanaAlta.tbproductos.selectedItems():
+            print(items.text())
 
-        usuarios = fdb.consultagral('Select * from usuarios')
-        cantusuarios = len(usuarios)
-        for usuario in range(cantusuarios):
-            item = usuarios[usuario][1]
-            self.cbusuario.addItem(str(item))
+def mostrarVentanaAlta():
+    return V_VentanaAlta.show ()
 
-        #verificar usuario
+def btnlogingetdata():
 
-
-
-        def btnlogingetdata():
 
             #DATOS INGRESADOS
             inputPass = V_Login.inputpassword.text()
@@ -35,8 +36,12 @@ class Login (QDialog):
 
             userAct = userSelected()
             V_ListadoVentas.lbluser.setText(userAct)
-            userAlta = fdb.consultagral('Select ID_USUARIO from usuarios where USUARIO = ' + '"' + userAct + '"')[0][0]
-            V_VentanaAlta.listavendedor.setCurrentIndex(userAlta-1) # el -1 es para compensar que no tiene la opcion USUARIO
+            try:
+                userAlta = fdb.consultagral('Select ID_USUARIO from usuarios where USUARIO = ' + '"' + userAct + '"')[0][0]
+                V_VentanaAlta.listavendedor.setCurrentIndex (userAlta - 1 )  # el -1 es para compensar que no tiene la opcion USUARIO
+            except:
+                pass
+
             #TRAE DATOS DE USUARIO DE BD
             try:
                 passDB = str(fdb.consultagral('Select CONTRASENA from usuarios where USUARIO = ' + '"' + userSelected() + '"')[0][0])
@@ -54,6 +59,29 @@ class Login (QDialog):
             else :
                 V_Login.lblerror.setText('Usuario o contraseña incorrecta')
 
+
+
+# def getUsuarios():
+#     usuarios = fdb.consultagral ( 'Select * from usuarios' )
+#     cantusuarios = len ( usuarios )
+#     for usuario in range ( cantusuarios ):
+#         item = usuarios[usuario][1]
+
+
+#ventana
+
+#Login
+class Login (QDialog):
+    def __init__(self):
+        super(Login,self).__init__()
+        uic.loadUi('Login.ui',self)
+
+        usuarios = fdb.consultagral('Select * from usuarios')
+        cantusuarios = len(usuarios)
+        for usuario in range(cantusuarios):
+            item = usuarios[usuario][1]
+            self.cbusuario.addItem(str(item))
+
         self.btnLogin.clicked.connect(btnlogingetdata)
 
 
@@ -70,21 +98,13 @@ class ListadoVentas (QDialog):
         ventas = fdb.consultagral("SELECT USUARIO, DESCRIPCION, PRECIO, FECHA, ventas.ID_VENTA FROM practicaDB.usuarios inner join practicaDB.ventas on practicaDB.usuarios.ID_USUARIO = practicaDB.ventas.ID_USUARIO inner join practicaDB.productos on practicaDB.productos.ID_PRODUCTO = practicaDB.ventas.ID_VENTA")
 
         #Generar y poblar tabla
-        for columna in range (4):
-            for fila in range (2):
+        for columna in range (5):
+            for fila in range(2):
                 self.tbventas.setRowCount(10)
                 self.tbventas.setItem ( fila, columna, QtWidgets.QTableWidgetItem ( str(ventas[fila][columna] )) )
 
-        def mostrarVentanaAlta():
-            return V_VentanaAlta.show ()
-
-
-
         #Seleccion fila
-
-
-
-
+        self.tbventas.clicked.connect(selectedRow)
 
         self.btnalta.clicked.connect (mostrarVentanaAlta)
 
@@ -112,6 +132,17 @@ class VentanaAlta (QDialog):
                     self.tbproductos.setRowCount ( 11 )
                     self.tbproductos.setItem ( fila, columna,QtWidgets.QTableWidgetItem ( str ( producto[fila][columna] ) ) )
 
+        def fechaHora():
+            dia = datetime.datetime.now ().strftime ( '%d' )
+            mes = datetime.datetime.now ().strftime ( '%m' )
+            year = datetime.datetime.now ().strftime ( '%Y' )
+            hora = datetime.datetime.now ().strftime ( '%X' )
+            fyHora = dia + '/' + mes + '/' + year + ' ' + hora
+            return fyHora
+
+        self.lblfecha.setText(fechaHora())
+
+        self.tbproductos.clicked.connect ( selectedRow )
 
 
 
@@ -120,14 +151,6 @@ app = QApplication(sys.argv)
 V_Login = Login()
 V_VentanaAlta = VentanaAlta()
 V_ListadoVentas = ListadoVentas()
-
-
-
-
-
-
-
-
 
 # muestra ventanas
 V_Login.show()

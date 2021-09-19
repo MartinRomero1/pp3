@@ -29,17 +29,20 @@
   <widget class="QLabel" name="lblfecha">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>20</y>
+     <x>60</x>
+     <y>14</y>
      <width>281</width>
-     <height>31</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="text">
     <string/>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="btnAlta">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -92,6 +95,9 @@
      <width>351</width>
      <height>192</height>
     </rect>
+   </property>
+   <property name="editTriggers">
+    <set>QAbstractItemView::NoEditTriggers</set>
    </property>
    <property name="selectionMode">
     <enum>QAbstractItemView::SingleSelection</enum>
