@@ -20,6 +20,7 @@ def selectedRow():
         print ( 'fila alta seleccionada' )
         for items in V_VentanaAlta.tbproductos.selectedItems():
             print(items.text())
+    return items.text()
 
 def mostrarVentanaAlta():
     return V_VentanaAlta.show ()
@@ -108,8 +109,6 @@ class ListadoVentas (QDialog):
 
         self.btnalta.clicked.connect (mostrarVentanaAlta)
 
-
-
 #Alta de Ventas
 class VentanaAlta (QDialog):
     def __init__(self):
@@ -131,7 +130,7 @@ class VentanaAlta (QDialog):
                 for fila in range ( 8 ):
                     self.tbproductos.setRowCount ( 11 )
                     self.tbproductos.setItem ( fila, columna,QtWidgets.QTableWidgetItem ( str ( producto[fila][columna] ) ) )
-
+        # FECHA Y HORA
         def fechaHora():
             dia = datetime.datetime.now ().strftime ( '%d' )
             mes = datetime.datetime.now ().strftime ( '%m' )
@@ -142,8 +141,15 @@ class VentanaAlta (QDialog):
 
         self.lblfecha.setText(fechaHora())
 
+        # ALTA DE VENTA
         self.tbproductos.clicked.connect ( selectedRow )
 
+        def altaVenta():
+            idUser = fdb.consultagral ( 'SELECT ID_USUARIO FROM practicaDB.usuarios where USUARIO ='+selectedRow[0] )
+            idProducto = fdb.consultagral ( 'SELECT ID_PRODUCTO  FROM practicaDB.productos where DESCRIPCION ='+ +selectedRow[1])
+            setAlta = fdb.consultagral('INSERT INTO practicaDB.ventas (ID_USUARIO,ID_PRODUCTO, FECHA) VALUES ("'+idUser+'","'+idProducto+'","'+fechaHora()+'")')
+
+        self.btnAlta.clicked.connect(altaVenta)
 
 
 #Llamada a ventanas

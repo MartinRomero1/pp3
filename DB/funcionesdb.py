@@ -19,6 +19,9 @@ def consultagral(sql):
    return resultado
 
 
+
+
+
 #consulta listaventas
 
 # SELECT USUARIO, DESCRIPCION, PRECIO, FECHA FROM practicaDB.usuarios
