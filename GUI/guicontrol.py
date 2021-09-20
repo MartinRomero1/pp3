@@ -13,15 +13,16 @@ def selectedRow():
         V_ListadoVentas.btnModificarReg.setEnabled ( True )
         print('fila venta seleccionada')
         for items in V_ListadoVentas.tbventas.selectedItems():
-            print(items.text())
+            listaitems = [items.text ()]
+            print ( listaitems )
 
     if V_VentanaAlta.tbproductos.selectedItems() and V_VentanaAlta.isActiveWindow():
         V_VentanaAlta.btnAlta.setEnabled(True)
         print ( 'fila alta seleccionada' )
         for items in V_VentanaAlta.tbproductos.selectedItems():
-            print(items.text())
-    return items.text()
-
+            listaitems =(items.text())
+            print(listaitems)
+    return listaitems
 def mostrarVentanaAlta():
     return V_VentanaAlta.show ()
 
@@ -145,10 +146,11 @@ class VentanaAlta (QDialog):
         self.tbproductos.clicked.connect ( selectedRow )
 
         def altaVenta():
-            idUser = fdb.consultagral ( 'SELECT ID_USUARIO FROM practicaDB.usuarios where USUARIO ='+selectedRow[0] )
-            idProducto = fdb.consultagral ( 'SELECT ID_PRODUCTO  FROM practicaDB.productos where DESCRIPCION ='+ +selectedRow[1])
-            setAlta = fdb.consultagral('INSERT INTO practicaDB.ventas (ID_USUARIO,ID_PRODUCTO, FECHA) VALUES ("'+idUser+'","'+idProducto+'","'+fechaHora()+'")')
-
+            idUser =fdb.consultagral ( 'SELECT ID_USUARIO FROM practicaDB.usuarios where USUARIO ="'+ userSelected()+'"' )[0][0]
+            # print(fdb.consultagral ( 'SELECT ID_PRODUCTO FROM practicaDB.productos where DESCRIPCION ="'+ selectedRow()+'"')[0])
+            # setAlta = print(fdb.consultagral('INSERT INTO practicaDB.ventas (ID_USUARIO,ID_PRODUCTO, FECHA) VALUES ("'+idUser+'","'+idProducto+'","'+fechaHora()+'")'))
+            se=selectedRow()
+            print (se[0])
         self.btnAlta.clicked.connect(altaVenta)
 
 
