@@ -18,9 +18,13 @@ def consultagral(sql):
    resultado = cursor.fetchall()
    return resultado
 
-
-
-
+def consultaModif(sql):
+   conexion = mysql.connector.connect ( **dbconn )
+   cursor = conexion.cursor ()
+   cursor.execute(sql)
+   conexion.commit()
+   resultado = cursor.fetchall()
+   return resultado
 
 #consulta listaventas
 
