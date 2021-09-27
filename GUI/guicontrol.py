@@ -16,7 +16,7 @@ def selectedRow():
         for items in V_ListadoVentas.tbventas.selectedItems():
            listaitems.append(items.text())
         print ( listaitems )
-
+        return listaitems
     if V_VentanaAlta.tbproductos.selectedItems() and V_VentanaAlta.isActiveWindow():
         V_VentanaAlta.btnAlta.setEnabled(True)
         print ( 'fila alta seleccionada' )
@@ -24,7 +24,7 @@ def selectedRow():
         for items in V_VentanaAlta.tbproductos.selectedItems():
             listaitems.append(items.text())
         print(listaitems)
-    return listaitems
+        return listaitems
 
 def mostrarVentanaAlta():
     return V_VentanaAlta.show ()
@@ -70,6 +70,17 @@ def btnlogingetdata():
             else :
                 V_Login.lblerror.setText('Usuario o contraseña incorrecta')
 
+def updateVentas():
+    ventas = fdb.consultagral (
+        "select USUARIO,DESCRIPCION,PRECIO,FECHA,ID_VENTA FROM practicaDB.ventas inner join practicaDB.usuarios on practicaDB.ventas.ID_USUARIO = practicaDB.usuarios.ID_USUARIO inner join practicaDB.productos on practicaDB.ventas.ID_PRODUCTO = practicaDB.productos.ID_PRODUCTO;" )
+    print ( ventas )
+    # Generar y poblar tabla
+    for columna in range ( 5 ):
+        for fila in range ( len ( ventas ) ):
+            V_ListadoVentas.tbventas.setRowCount ( len ( ventas ) )
+            # print('ventas'+ str(len(ventas)))
+
+            V_ListadoVentas.tbventas.setItem ( fila, columna,QtWidgets.QTableWidgetItem ( str ( ventas[fila][columna] ) ) )
 
 
 # def getUsuarios():
@@ -82,6 +93,7 @@ def btnlogingetdata():
 #ventana
 
 #Login
+
 class Login (QDialog):
     def __init__(self):
         super(Login,self).__init__()
@@ -104,7 +116,7 @@ class ListadoVentas (QDialog):
 
         # TRAER DATOS DE USUARIO LOGUEADO
 
-
+        # updateVentas()
 
         ventas = fdb.consultagral("select USUARIO,DESCRIPCION,PRECIO,FECHA,ID_VENTA FROM practicaDB.ventas inner join practicaDB.usuarios on practicaDB.ventas.ID_USUARIO = practicaDB.usuarios.ID_USUARIO inner join practicaDB.productos on practicaDB.ventas.ID_PRODUCTO = practicaDB.productos.ID_PRODUCTO;")
         print ( ventas )
@@ -117,18 +129,21 @@ class ListadoVentas (QDialog):
                 self.tbventas.setItem ( fila, columna, QtWidgets.QTableWidgetItem ( str(ventas[fila][columna] )) )
 
         def eliminarVenta():
-            idVenta = selectedRow()[4]
+            idVenta = int(selectedRow()[4])
             print(idVenta)
-            ventaEliminada = fdb.consultaModif ("DELETE FROM practicaDB.ventas WHERE ID_VENTA = "+idVenta)
-            print("DELETE FROM practicaDB.ventas WHERE ID_VENTA = "+idVenta)
+            ventaEliminada = fdb.consultaModif ("DELETE FROM practicaDB.ventas WHERE ID_VENTA = "+str(idVenta))
+            print("DELETE FROM practicaDB.ventas WHERE ID_VENTA = "+str(idVenta))
+            V_ListadoVentas.hide ()
+            updateVentas ()
+            V_ListadoVentas.tbventas.clearSelection()
+            V_ListadoVentas.show ()
+            V_ListadoVentas.btnEliminarReg.setEnabled(False)
+            V_ListadoVentas.btnModificarReg.setEnabled (False)
+
+            selectedRow()
             return ventaEliminada
 
-
-
-
-        #Seleccion fila
         self.tbventas.clicked.connect(selectedRow)
-
         self.btnalta.clicked.connect (mostrarVentanaAlta)
         self.btnEliminarReg.clicked.connect(eliminarVenta)
         self.btnModificarReg.clicked.connect(mostrarVentanaModif)
@@ -173,6 +188,10 @@ class VentanaAlta (QDialog):
             idProducto = str(fdb.consultagral ( 'SELECT ID_PRODUCTO FROM practicaDB.productos where DESCRIPCION ="'+ selectedRow()[0]+'"')[0][0])
             setAlta = str(fdb.consultaModif('INSERT INTO practicaDB.ventas (ID_USUARIO,ID_PRODUCTO, FECHA) VALUES ('+idUser+','+idProducto+',"'+fechaHora()+'")'))
             print('INSERT INTO practicaDB.ventas (ID_USUARIO,ID_PRODUCTO, FECHA) VALUES ('+idUser+','+idProducto+',"'+fechaHora()+'")')
+            V_VentanaAlta.hide()
+            V_ListadoVentas.hide()
+            updateVentas()
+            V_ListadoVentas.show()
             return setAlta
         self.btnAlta.clicked.connect(altaVenta)
 
@@ -206,19 +225,23 @@ class VentanaModif (QDialog):
             fyHora = dia + '/' + mes + '/' + year + ' ' + hora
             return fyHora
 
-        self.lblfecha.setText("Hola")
+        self.lblfecha.setText("No se puede modificar la fecha")
 
 
         # ALTA DE VENTA
         self.tbproductos.clicked.connect ( selectedRow )
 
-        def altaVenta():
+        def modifVenta():
             idUser = str(fdb.consultagral ( 'SELECT ID_USUARIO FROM practicaDB.usuarios where USUARIO = "'+ userSelected()+'"')[0][0])
             idProducto = str(fdb.consultagral ( 'SELECT ID_PRODUCTO FROM practicaDB.productos where DESCRIPCION ="'+ selectedRow()[0]+'"')[0][0])
             setAlta = str(fdb.consultaModif('INSERT INTO practicaDB.ventas (ID_USUARIO,ID_PRODUCTO, FECHA) VALUES ('+idUser+','+idProducto+',"'+fechaHora()+'")'))
             print('INSERT INTO practicaDB.ventas (ID_USUARIO,ID_PRODUCTO, FECHA) VALUES ('+idUser+','+idProducto+',"'+fechaHora()+'")')
+            V_VentanaModif.hide ()
+            V_ListadoVentas.hide ()
+            updateVentas ()
+            V_ListadoVentas.show ()
             return setAlta
-        self.btnAlta.clicked.connect(altaVenta)
+        self.btnAlta.clicked.connect(modifVenta)
 
 
 #Llamada a ventanas
