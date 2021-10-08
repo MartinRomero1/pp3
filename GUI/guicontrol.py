@@ -135,12 +135,10 @@ class ListadoVentas (QDialog):
             print("DELETE FROM practicaDB.ventas WHERE ID_VENTA = "+str(idVenta))
             V_ListadoVentas.hide ()
             updateVentas ()
-            V_ListadoVentas.tbventas.clearSelection()
+            # V_ListadoVentas.tbventas.clearSelection()
+            # V_ListadoVentas.btnEliminarReg.setEnabled(False)
+            # V_ListadoVentas.btnModificarReg.setEnabled (False)
             V_ListadoVentas.show ()
-            V_ListadoVentas.btnEliminarReg.setEnabled(False)
-            V_ListadoVentas.btnModificarReg.setEnabled (False)
-
-            selectedRow()
             return ventaEliminada
 
         self.tbventas.clicked.connect(selectedRow)
