@@ -16,7 +16,7 @@
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>20</x>
      <y>20</y>
      <width>58</width>
      <height>16</height>
@@ -29,8 +29,8 @@
   <widget class="QLabel" name="lblfecha">
    <property name="geometry">
     <rect>
-     <x>60</x>
-     <y>14</y>
+     <x>90</x>
+     <y>11</y>
      <width>281</width>
      <height>30</height>
     </rect>
@@ -68,23 +68,28 @@
    <property name="geometry">
     <rect>
      <x>90</x>
-     <y>60</y>
+     <y>47</y>
      <width>251</width>
      <height>24</height>
     </rect>
    </property>
    <property name="currentIndex">
-    <number>-1</number>
+    <number>0</number>
    </property>
    <property name="frame">
     <bool>true</bool>
    </property>
+   <item>
+    <property name="text">
+     <string>USUARIO</string>
+    </property>
+   </item>
   </widget>
   <widget class="QLabel" name="label_5">
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>62</y>
+     <y>50</y>
      <width>58</width>
      <height>16</height>
     </rect>
@@ -124,6 +129,25 @@
      <string>Precio</string>
     </property>
    </column>
+  </widget>
+  <widget class="QLabel" name="lblerror">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>70</y>
+     <width>281</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>La fecha no puede modificarse</string>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color : red</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
   </widget>
  </widget>
  <resources/>

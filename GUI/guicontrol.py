@@ -4,8 +4,13 @@ from PyQt5.QtWidgets import QDialog, QApplication
 from DB import funcionesdb as fdb
 import datetime
 
+
+
 def userSelected():
     return (V_Login.cbusuario.currentText ())
+
+def vendedorSelected():
+    return (V_VentanaModif.listavendedor.currentText ())
 
 def selectedRow():
     if V_ListadoVentas.tbventas.selectedItems() and V_ListadoVentas.isActiveWindow():
@@ -17,6 +22,7 @@ def selectedRow():
            listaitems.append(items.text())
         print ( listaitems )
         return listaitems
+
     if V_VentanaAlta.tbproductos.selectedItems() and V_VentanaAlta.isActiveWindow():
         V_VentanaAlta.btnAlta.setEnabled(True)
         print ( 'fila alta seleccionada' )
@@ -25,6 +31,15 @@ def selectedRow():
             listaitems.append(items.text())
         print(listaitems)
         return listaitems
+
+    if V_VentanaModif.tbproductos.selectedItems() and V_VentanaModif.isActiveWindow():
+        print ( 'fila alta seleccionada' )
+        listaitems = []
+        for items in  VentanaModif.tbproductos.selectedItems():
+            listaitems.append(items.text())
+        print(listaitems)
+        return listaitems
+
 
 def mostrarVentanaAlta():
     return V_VentanaAlta.show ()
@@ -47,7 +62,6 @@ def btnlogingetdata():
             try:
                 userAlta = fdb.consultagral('Select ID_USUARIO from usuarios where USUARIO = ' + '"' + userAct + '"')[0][0]
                 V_VentanaAlta.listavendedor.setCurrentIndex (userAlta - 1 )  # el -1 es para compensar que no tiene la opcion USUARIO
-                V_VentanaModif.listavendedor.setCurrentIndex (selectedRow[0][0])
                 print('Hola'+selectedRow()[0])
             except:
                 pass
@@ -131,15 +145,19 @@ class ListadoVentas (QDialog):
         def eliminarVenta():
             idVenta = int(selectedRow()[4])
             print(idVenta)
-            ventaEliminada = fdb.consultaModif ("DELETE FROM practicaDB.ventas WHERE ID_VENTA = "+str(idVenta))
+            #ventaEliminada = \
+            fdb.consultaModif ("DELETE FROM practicaDB.ventas WHERE ID_VENTA = "+str(idVenta))
             print("DELETE FROM practicaDB.ventas WHERE ID_VENTA = "+str(idVenta))
-            V_ListadoVentas.hide ()
+            V_ListadoVentas.setVisible(False)
             updateVentas ()
-            # V_ListadoVentas.tbventas.clearSelection()
-            # V_ListadoVentas.btnEliminarReg.setEnabled(False)
-            # V_ListadoVentas.btnModificarReg.setEnabled (False)
-            V_ListadoVentas.show ()
-            return ventaEliminada
+            V_ListadoVentas.tbventas.clearSelection()
+            V_ListadoVentas.btnEliminarReg.setEnabled(False)
+            V_ListadoVentas.btnModificarReg.setEnabled (False)
+            V_ListadoVentas.setVisible(True)
+            if selectedRow():
+                V_ListadoVentas.btnEliminarReg.setEnabled ( True )
+                V_ListadoVentas.btnModificarReg.setEnabled ( True )
+
 
         self.tbventas.clicked.connect(selectedRow)
         self.btnalta.clicked.connect (mostrarVentanaAlta)
@@ -223,23 +241,44 @@ class VentanaModif (QDialog):
             fyHora = dia + '/' + mes + '/' + year + ' ' + hora
             return fyHora
 
+
+
         self.lblfecha.setText("No se puede modificar la fecha")
+        # self.listavendedor.setCurrentIndex(selectedRow)
 
+        # fafafa = selectedRow()
 
-        # ALTA DE VENTA
+        # MODIF DE VENTA
         self.tbproductos.clicked.connect ( selectedRow )
 
         def modifVenta():
-            idUser = str(fdb.consultagral ( 'SELECT ID_USUARIO FROM practicaDB.usuarios where USUARIO = "'+ userSelected()+'"')[0][0])
-            idProducto = str(fdb.consultagral ( 'SELECT ID_PRODUCTO FROM practicaDB.productos where DESCRIPCION ="'+ selectedRow()[0]+'"')[0][0])
-            setAlta = str(fdb.consultaModif('INSERT INTO practicaDB.ventas (ID_USUARIO,ID_PRODUCTO, FECHA) VALUES ('+idUser+','+idProducto+',"'+fechaHora()+'")'))
-            print('INSERT INTO practicaDB.ventas (ID_USUARIO,ID_PRODUCTO, FECHA) VALUES ('+idUser+','+idProducto+',"'+fechaHora()+'")')
-            V_VentanaModif.hide ()
-            V_ListadoVentas.hide ()
-            updateVentas ()
-            V_ListadoVentas.show ()
+            try:
+                idUser = str (fdb.consultagral ('SELECT ID_USUARIO FROM practicaDB.usuarios where USUARIO = "' + vendedorSelected() + '"' )[0][0] )
+                idProducto = str(fdb.consultagral ( 'SELECT ID_PRODUCTO FROM practicaDB.productos where DESCRIPCION ="'+ selectedRow()[0]+'"')[0][0])
+                setAlta = str(fdb.consultaModif('INSERT INTO practicaDB.ventas (ID_USUARIO,ID_PRODUCTO, FECHA) VALUES ('+idUser+','+idProducto+',"'+fechaHora()+'")'))
+                print('INSERT INTO practicaDB.ventas (ID_USUARIO,ID_PRODUCTO, FECHA) VALUES ('+idUser+','+idProducto+',"'+fechaHora()+'")')
+                #
+                # # V_VentanaModif.hide ()
+                # V_ListadoVentas.hide ()
+                # updateVentas ()
+                # V_ListadoVentas.show ()
+
+            except:
+                print('ERROR EN INSERT DE FUNCION MODIFVENTA()')
+                setAlta = print('ERROR EN SETALTA')
+
+
+            if self.listavendedor.currentText () == 'USUARIO':
+                self.lblerror.setText ( 'Seleccione usuario' )
+            else:
+                self.lblerror.setText ( '' )
+
+
             return setAlta
+
         self.btnAlta.clicked.connect(modifVenta)
+
+
 
 
 #Llamada a ventanas
