@@ -246,26 +246,32 @@ class VentanaModif (QDialog):
                     idProducto = str(fdb.consultagral('SELECT ID_PRODUCTO FROM practicaDB.productos where DESCRIPCION ="' + ventanaModifSelectedRow()[0] + '"')[0][0])
                     print('id Producto: ' + idProducto)
                     print('Producto ACTUALIZADO')
+
+
                 except:
-                    idProducto = str(fdb.consultagral('SELECT ID_PRODUCTO FROM practicaDB.productos where DESCRIPCION ="' + listadoVentasSelectedRow()[0] + '"')[0][0])
-                    print('id Producto: '+idProducto)
-                    print('El producto no se ha modificado')
+                    # idProducto = str(fdb.consultagral('SELECT ID_PRODUCTO FROM practicaDB.productos where DESCRIPCION ="' + listadoVentasSelectedRow()[0] + '"')[0][0])
+                    # print('id Producto: '+idProducto)
+                    # print('El producto no se ha modificado')
+
+                    self.lblerror.setText('Seleccione producto')
 
                 idVenta = str(fdb.consultagral('SELECT ID_VENTA FROM practicaDB.ventas where ID_VENTA = "' + listadoVentasSelectedRow()[4] + '"')[0][0])
                 print ('id venta: '+idVenta)
-                # updateItem = str(fdb.consultaModif("UPDATE practicaDB.ventas SET ID_USUARIO = " +idUser+',' 'ID_PRODUCTO = '+idProducto WHERE ID_VENTA = +idVenta)
-                # print('INSERT INTO practicaDB.ventas (ID_USUARIO,ID_PRODUCTO, FECHA) VALUES ('+idUser+','+idProducto+',"'+fechaHora()+'")')
+                updateItem = str(fdb.consultaModif('UPDATE practicaDB.ventas SET ID_USUARIO = "' +idUser+'",' 'ID_PRODUCTO = "'+idProducto+'" WHERE ID_VENTA = "'+idVenta+'"')
+                # print(UPDATE practicaDB.ventas SET ID_USUARIO = "' +idUser+',' 'ID_PRODUCTO = '+idProducto' WHERE ID_VENTA = '+idVenta+'"'")
 
-                    # # V_VentanaModif.hide ()
-                    # V_ListadoVentas.hide ()
-                    # updateVentas ()
-                    # V_ListadoVentas.show ()
+
+                # V_VentanaModif.hide ()
+                # V_ListadoVentas.hide ()
+                # updateVentas ()
+                # V_ListadoVentas.show ()
 
                 # except:
                 #     print('ERROR EN INSERT DE FUNCION MODIFVENTA()')
                 #     updateItem = print('ERROR EN SETALTA')
 
-                # return updateItem
+
+            return updateItem
 
         self.btnAlta.clicked.connect(modifVenta)
 
