@@ -22,8 +22,11 @@
      <height>28</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: green;</string>
+   </property>
    <property name="text">
-    <string>Agregar Registro</string>
+    <string>Agregar Registro...</string>
    </property>
   </widget>
   <widget class="QPushButton" name="btnEliminarReg">
@@ -39,7 +42,7 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true"/>
+    <string notr="true">background-color: red;</string>
    </property>
    <property name="text">
     <string>Eliminar Registro</string>
@@ -64,7 +67,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Modificar Registro</string>
+    <string>Modificar Registro...</string>
    </property>
   </widget>
   <widget class="QGroupBox" name="groupBox_2">

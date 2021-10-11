@@ -11,7 +11,7 @@ def vendedorSelected():
     return (V_VentanaModif.listavendedor.currentText ())
 
 def listadoVentasSelectedRow():
-    if V_ListadoVentas.tbventas.selectedItems() and V_ListadoVentas.isActiveWindow():
+    if V_ListadoVentas.tbventas.selectedItems():
         V_ListadoVentas.btnEliminarReg.setEnabled(True)
         V_ListadoVentas.btnModificarReg.setEnabled ( True )
         print('fila venta seleccionada')
@@ -22,22 +22,20 @@ def listadoVentasSelectedRow():
         return listaitems
 
 def ventanaAltaSelectedRow():
-    if V_VentanaAlta.tbproductos.selectedItems() and V_VentanaAlta.isActiveWindow():
-        V_VentanaAlta.btnAlta.setEnabled(True)
-        print ( 'fila alta seleccionada' )
-        listaitems = []
-        for items in V_VentanaAlta.tbproductos.selectedItems():
-            listaitems.append(items.text())
-        print(listaitems)
+    V_VentanaAlta.btnAlta.setEnabled(True)
+    print ( 'fila alta seleccionada' )
+    listaitems = []
+    for items in V_VentanaAlta.tbproductos.selectedItems():
+        listaitems.append(items.text())
+    print(listaitems)
     return listaitems
 
 def ventanaModifSelectedRow():
-    if V_VentanaModif.tbproductos.selectedItems() and V_VentanaModif.isActiveWindow():
-        print ( 'fila alta seleccionada' )
-        listaitems = []
-        for items in  V_VentanaModif.tbproductos.selectedItems():
-            listaitems.append(items.text())
-        print(listaitems)
+    print ( 'fila modificar seleccionada' )
+    listaitems = []
+    for items in  V_VentanaModif.tbproductos.selectedItems():
+        listaitems.append(items.text())
+    print(listaitems)
     return listaitems
 
 def mostrarVentanaAlta():
@@ -242,10 +240,19 @@ class VentanaModif (QDialog):
                 self.lblerror.setText('')
 
                 # try:
-                # idUser = str(fdb.consultagral('SELECT ID_USUARIO FROM practicaDB.usuarios where USUARIO = "' + listadoVentasSelectedRow() + '"')[0][0])
-                print (listadoVentasSelectedRow())
-                # idProducto = str(fdb.consultagral('SELECT ID_PRODUCTO FROM practicaDB.productos where DESCRIPCION ="' + ventanaAltaSelectedRow()[0] + '"')[0][0])
-                # idVenta = str(fdb.consultaModif('SELECT ID_VENTA FROM practicaDB.ventas where ID_VENTA = WHATEVERVAYAACA')
+                idUser = str(fdb.consultagral('SELECT ID_USUARIO FROM practicaDB.usuarios where USUARIO = "' + self.listavendedor.currentText() + '"')[0][0])
+                print ('id usuario: '+idUser)
+                try:
+                    idProducto = str(fdb.consultagral('SELECT ID_PRODUCTO FROM practicaDB.productos where DESCRIPCION ="' + ventanaModifSelectedRow()[0] + '"')[0][0])
+                    print('id Producto: ' + idProducto)
+                    print('Producto ACTUALIZADO')
+                except:
+                    idProducto = str(fdb.consultagral('SELECT ID_PRODUCTO FROM practicaDB.productos where DESCRIPCION ="' + listadoVentasSelectedRow()[0] + '"')[0][0])
+                    print('id Producto: '+idProducto)
+                    print('El producto no se ha modificado')
+
+                idVenta = str(fdb.consultagral('SELECT ID_VENTA FROM practicaDB.ventas where ID_VENTA = "' + listadoVentasSelectedRow()[4] + '"')[0][0])
+                print ('id venta: '+idVenta)
                 # updateItem = str(fdb.consultaModif("UPDATE practicaDB.ventas SET ID_USUARIO = " +idUser+',' 'ID_PRODUCTO = '+idProducto WHERE ID_VENTA = +idVenta)
                 # print('INSERT INTO practicaDB.ventas (ID_USUARIO,ID_PRODUCTO, FECHA) VALUES ('+idUser+','+idProducto+',"'+fechaHora()+'")')
 
