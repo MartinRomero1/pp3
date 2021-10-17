@@ -124,14 +124,13 @@ class ListadoVentas (QDialog):
         for columna in range (5):
             for fila in range( len ( ventas ) ):
                 self.tbventas.setRowCount( len ( ventas ) )
-                #print('ventas'+ str(len(ventas)))
+
 
                 self.tbventas.setItem ( fila, columna, QtWidgets.QTableWidgetItem ( str(ventas[fila][columna] )) )
 
         def eliminarVenta():
             idVenta = int(listadoVentasSelectedRow()[4])
             print(idVenta)
-            #ventaEliminada = \
             fdb.consultaModif ("DELETE FROM practicaDB.ventas WHERE ID_VENTA = "+str(idVenta))
             print("DELETE FROM practicaDB.ventas WHERE ID_VENTA = "+str(idVenta))
             V_ListadoVentas.setVisible(False)
@@ -144,10 +143,13 @@ class ListadoVentas (QDialog):
                 V_ListadoVentas.btnEliminarReg.setEnabled ( True )
                 V_ListadoVentas.btnModificarReg.setEnabled ( True )
 
+        def mensajeAdvertenciaBorrado():
+            pass
+
 
         self.tbventas.clicked.connect(listadoVentasSelectedRow)
         self.btnalta.clicked.connect (mostrarVentanaAlta)
-        self.btnEliminarReg.clicked.connect(eliminarVenta)
+        self.btnEliminarReg.clicked.connect(eliminarVenta) #cambiar este para poner mensaje de advertencia
         self.btnModificarReg.clicked.connect(mostrarVentanaModif)
 
 #Ventana Alta de Ventas
@@ -233,44 +235,23 @@ class VentanaModif (QDialog):
         self.tbproductos.clicked.connect ( ventanaModifSelectedRow )
 
         def modifVenta():
-
             if self.listavendedor.currentText() == 'USUARIO':
                 self.lblerror.setText('Seleccione usuario')
+            elif not self.tbproductos.selectedItems():
+                self.lblerror.setText('Seleccione producto')
             else:
-                self.lblerror.setText('')
+                self.lblerror.setText('Funciona OK')
 
-                # try:
                 idUser = str(fdb.consultagral('SELECT ID_USUARIO FROM practicaDB.usuarios where USUARIO = "' + self.listavendedor.currentText() + '"')[0][0])
-                print ('id usuario: '+idUser)
-                try:
-                    idProducto = str(fdb.consultagral('SELECT ID_PRODUCTO FROM practicaDB.productos where DESCRIPCION ="' + ventanaModifSelectedRow()[0] + '"')[0][0])
-                    print('id Producto: ' + idProducto)
-                    print('Producto ACTUALIZADO')
+                idProducto = str(fdb.consultagral('SELECT ID_PRODUCTO FROM practicaDB.productos where DESCRIPCION ="' + ventanaModifSelectedRow()[0] + '"')[0][0])
+                idVenta = str(fdb.consultagral('SELECT ID_VENTA FROM practicaDB.ventas where ID_VENTA = ' +listadoVentasSelectedRow()[4])[0][0])
+                updateItem = str(fdb.consultaModif('UPDATE practicaDB.ventas SET ID_USUARIO = '+idUser+', ID_PRODUCTO = '+idProducto+' where ID_VENTA = '+idVenta))
+                print('UPDATE practicaDB.ventas SET ID_USUARIO = '+idUser+', ID_PRODUCTO = '+idProducto+' where ID_VENTA = '+idVenta)
 
-
-                except:
-                    # idProducto = str(fdb.consultagral('SELECT ID_PRODUCTO FROM practicaDB.productos where DESCRIPCION ="' + listadoVentasSelectedRow()[0] + '"')[0][0])
-                    # print('id Producto: '+idProducto)
-                    # print('El producto no se ha modificado')
-
-                    self.lblerror.setText('Seleccione producto')
-
-                idVenta = str(fdb.consultagral('SELECT ID_VENTA FROM practicaDB.ventas where ID_VENTA = "' + listadoVentasSelectedRow()[4] + '"')[0][0])
-                print ('id venta: '+idVenta)
-                updateItem = str(fdb.consultaModif('UPDATE practicaDB.ventas SET ID_USUARIO = "' +idUser+'",' 'ID_PRODUCTO = "'+idProducto+'" WHERE ID_VENTA = "'+idVenta+'"')
-                # print(UPDATE practicaDB.ventas SET ID_USUARIO = "' +idUser+',' 'ID_PRODUCTO = '+idProducto' WHERE ID_VENTA = '+idVenta+'"'")
-
-
-                # V_VentanaModif.hide ()
-                # V_ListadoVentas.hide ()
-                # updateVentas ()
-                # V_ListadoVentas.show ()
-
-                # except:
-                #     print('ERROR EN INSERT DE FUNCION MODIFVENTA()')
-                #     updateItem = print('ERROR EN SETALTA')
-
-
+                V_VentanaModif.hide()
+                V_ListadoVentas.hide()
+                updateVentas()
+                V_ListadoVentas.show()
             return updateItem
 
         self.btnAlta.clicked.connect(modifVenta)
