@@ -1,6 +1,6 @@
 import sys
 from PyQt5 import uic, QtWidgets
-from PyQt5.QtWidgets import QDialog, QApplication
+from PyQt5.QtWidgets import QDialog, QApplication, QMessageBox
 from DB import funcionesdb as fdb
 import datetime
 
@@ -144,12 +144,20 @@ class ListadoVentas (QDialog):
                 V_ListadoVentas.btnModificarReg.setEnabled ( True )
 
         def mensajeAdvertenciaBorrado():
-            pass
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Warning)
+            msg.setWindowTitle("Eliminar registro")
+            msg.setText("Está seguro que desea eliminar este registro?")
+            si = msg.addButton('Porsupu', QtWidgets.QMessageBox.YesRole)
+            no = msg.addButton('Nopo', QtWidgets.QMessageBox.NoRole)
+            x = msg.exec_()
+
+
 
 
         self.tbventas.clicked.connect(listadoVentasSelectedRow)
         self.btnalta.clicked.connect (mostrarVentanaAlta)
-        self.btnEliminarReg.clicked.connect(eliminarVenta) #cambiar este para poner mensaje de advertencia
+        self.btnEliminarReg.clicked.connect(mensajeAdvertenciaBorrado) #cambiar este para poner mensaje de advertencia
         self.btnModificarReg.clicked.connect(mostrarVentanaModif)
 
 #Ventana Alta de Ventas
