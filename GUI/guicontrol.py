@@ -81,16 +81,16 @@ def btnlogingetdata():
                 V_Login.lblerror.setText('Usuario o contraseña incorrecta')
 
 def updateVentas():
-    ventas = fdb.consultagral (
-        "select USUARIO,DESCRIPCION,PRECIO,FECHA,ID_VENTA FROM practicaDB.ventas inner join practicaDB.usuarios on practicaDB.ventas.ID_USUARIO = practicaDB.usuarios.ID_USUARIO inner join practicaDB.productos on practicaDB.ventas.ID_PRODUCTO = practicaDB.productos.ID_PRODUCTO;" )
-    print ( ventas )
+    ventas = fdb.consultagral(
+        "select USUARIO,DESCRIPCION,PRECIO,FECHA,ID_VENTA FROM practicaDB.ventas inner join practicaDB.usuarios on practicaDB.ventas.ID_USUARIO = practicaDB.usuarios.ID_USUARIO inner join practicaDB.productos on practicaDB.ventas.ID_PRODUCTO = practicaDB.productos.ID_PRODUCTO;")
+    print(ventas)
     # Generar y poblar tabla
-    for columna in range ( 5 ):
-        for fila in range ( len ( ventas ) ):
-            V_ListadoVentas.tbventas.setRowCount ( len ( ventas ) )
-            # print('ventas'+ str(len(ventas)))
+    for columna in range(5):
+        for fila in range(len(ventas)):
+            V_ListadoVentas.tbventas.setRowCount(len(ventas))
 
-            V_ListadoVentas.tbventas.setItem ( fila, columna,QtWidgets.QTableWidgetItem ( str ( ventas[fila][columna] ) ) )
+            V_ListadoVentas.tbventas.setItem(fila, columna, QtWidgets.QTableWidgetItem(str(ventas[fila][columna])))
+
 
 #ventanas
 
@@ -117,6 +117,8 @@ class ListadoVentas (QDialog):
         # TRAER DATOS DE USUARIO LOGUEADO
 
         # updateVentas()
+
+
 
         ventas = fdb.consultagral("select USUARIO,DESCRIPCION,PRECIO,FECHA,ID_VENTA FROM practicaDB.ventas inner join practicaDB.usuarios on practicaDB.ventas.ID_USUARIO = practicaDB.usuarios.ID_USUARIO inner join practicaDB.productos on practicaDB.ventas.ID_PRODUCTO = practicaDB.productos.ID_PRODUCTO;")
         print ( ventas )
@@ -148,12 +150,20 @@ class ListadoVentas (QDialog):
             msg.setIcon(QMessageBox.Warning)
             msg.setWindowTitle("Eliminar registro")
             msg.setText("Está seguro que desea eliminar este registro?")
-            si = msg.addButton('Porsupu', QtWidgets.QMessageBox.YesRole)
-            no = msg.addButton('Nopo', QtWidgets.QMessageBox.NoRole)
+            msg.addButton('Porsupu', QtWidgets.QMessageBox.YesRole)
+            msg.addButton('Nopo', QtWidgets.QMessageBox.NoRole)
+            msg.buttonClicked.connect(opcSelec)
             x = msg.exec_()
 
+        def opcSelec(i):
+            opcdelete = (i.text())
+            print(opcdelete)
 
-
+            if opcdelete == 'Porsupu':
+                eliminarVenta()
+                print('venta eliminada')
+            else:
+                print('Eliminacion cancelada')
 
         self.tbventas.clicked.connect(listadoVentasSelectedRow)
         self.btnalta.clicked.connect (mostrarVentanaAlta)
@@ -229,13 +239,6 @@ class VentanaModif (QDialog):
                     self.tbproductos.setRowCount ( 8 )
                     self.tbproductos.setItem ( fila, columna,QtWidgets.QTableWidgetItem ( str ( producto[fila][columna] ) ) )
         # FECHA Y HORA
-        def fechaHora():
-            dia = datetime.datetime.now ().strftime ( '%d' )
-            mes = datetime.datetime.now ().strftime ( '%m' )
-            year = datetime.datetime.now ().strftime ( '%Y' )
-            hora = datetime.datetime.now ().strftime ( '%X' )
-            fyHora = dia + '/' + mes + '/' + year + ' ' + hora
-            return fyHora
 
         self.lblfecha.setText("No se puede modificar la fecha")
 
@@ -260,7 +263,7 @@ class VentanaModif (QDialog):
                 V_ListadoVentas.hide()
                 updateVentas()
                 V_ListadoVentas.show()
-            return updateItem
+                return updateItem
 
         self.btnAlta.clicked.connect(modifVenta)
 

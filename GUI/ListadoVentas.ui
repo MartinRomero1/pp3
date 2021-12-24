@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: green;</string>
+    <string notr="true">background-color: blue;</string>
    </property>
    <property name="text">
     <string>Agregar Registro...</string>
@@ -45,7 +45,7 @@
     <string notr="true">background-color: red;</string>
    </property>
    <property name="text">
-    <string>Eliminar Registro</string>
+    <string>Eliminar Registro...</string>
    </property>
    <property name="default">
     <bool>false</bool>
